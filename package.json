@@ -1,0 +1,32 @@
+{
+  "name": "homebridge-sensor-stub",
+  "version": "0.1.22",
+  "description": "Test stub Homebridge accessory plugin generates sensor events for testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorthernMan54/homebridge-sensor-stub.git"
+  },
+  "keywords": [
+    "nodemcu",
+    "dht22",
+    "homebridge",
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  },
+  "dependencies": {
+    "debug": "^2.6.9"
+  },
+  "author": "NorthernMan54",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/NorthernMan54/homebridge-sensor-stub/issues"
+  },
+  "homepage": "https://github.com/NorthernMan54/homebridge-sensor-stub#readme"
+}
