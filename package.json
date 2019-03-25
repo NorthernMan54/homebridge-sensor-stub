@@ -1,6 +1,6 @@
 {
   "name": "homebridge-sensor-stub",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "Test stub Homebridge accessory plugin generates sensor events for testing",
   "main": "index.js",
   "scripts": {
