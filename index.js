@@ -17,6 +17,15 @@ Sample config.json
 
 */
 
+/* Contact Sensor Available Stateless
+
+this.addOptionalCharacteristic(Characteristic.StatusActive);
+this.addOptionalCharacteristic(Characteristic.StatusFault);
+this.addOptionalCharacteristic(Characteristic.StatusTampered);
+this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
+
+*/
+
 var Service, Characteristic;
 
 var debug = require('debug')('Stub');
@@ -41,11 +50,17 @@ function StubAccessory(log, config) {
 function sendEvent() {
   if (this.value) {
     this.value = false;
+    this.sendValue = this.toggle.true;
   } else {
     this.value = true;
+    this.sendValue = this.toggle.false;
   }
-  debug("Sending event", this.name, this.value);
-  this.sensor.getCharacteristic(this.characteristic).updateValue(this.value);
+  debug("Sending event", this.name, this.value, this.sendValue);
+  if (this.service.toLowerCase() === "contact-reach") {
+    // this.updateReachability(this.value);
+  } else {
+    this.sensor.getCharacteristic(this.characteristic).updateValue(this.sendValue);
+  }
 }
 
 StubAccessory.prototype = {
@@ -62,15 +77,63 @@ StubAccessory.prototype = {
       case "motion":
         this.sensor = new Service.MotionSensor(this.name);
         this.characteristic = Characteristic.MotionDetected;
-        // this.addCharacteristic(Characteristic.MotionDetected);
-
+        this.toggle = {
+          "true": true,
+          "false": false
+        };
         break;
       case "contact":
         this.sensor = new Service.ContactSensor(this.name);
         this.characteristic = Characteristic.ContactSensorState;
-        // this.addCharacteristic(Characteristic.ContactSensorState);
+        this.toggle = {
+          "true": true,
+          "false": false
+        };
+        break;
+      case "contact-fault":
+        this.sensor = new Service.ContactSensor(this.name);
+        this.characteristic = Characteristic.StatusFault;
+        this.toggle = {
+          "true": Characteristic.StatusFault.NO_FAULT,
+          "false": Characteristic.StatusFault.GENERAL_FAULT
+        };
+        break;
+      case "contact-battery":
+        this.sensor = new Service.ContactSensor(this.name);
+        this.characteristic = Characteristic.StatusLowBattery;
+        this.toggle = {
+          "true": Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL,
+          "false": Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW
+        };
+        break;
+      case "contact-tamper":
+        this.sensor = new Service.ContactSensor(this.name);
+        this.characteristic = Characteristic.StatusTampered;
+        this.toggle = {
+          "true": Characteristic.StatusTampered.NOT_TAMPERED,
+          "false": Characteristic.StatusTampered.TAMPERED
+        };
+        break;
+      case "contact-error":
+        this.sensor = new Service.ContactSensor(this.name);
+        this.characteristic = Characteristic.ContactSensorState;
+        this.toggle = {
+          "true": new Error("Error"),
+          "false": 0
+        };
+        break;
+      case "contact-reach":
+        this.sensor = new Service.ContactSensor(this.name);
+        this.characteristic = Characteristic.StatusFault;
+        this.toggle = {
+          "true": true,
+          "false": false
+        };
+        break;
     }
     setInterval(sendEvent.bind(this), this.interval * 1000);
+
+    this.log("Setting up", this.name, this.value, this.toggle);
 
     return [this.sensor, informationService];
   }
