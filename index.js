@@ -2,17 +2,36 @@
 
 Sample config.json
 
-"accessories": [{
-  "accessory": "Stub",
-  "name": "Motion",
-  "service": "motion",
-  "interval": 10,
-  "value": true
-}, {
-  "accessory": "Stub",
-  "name": "Contact",
-  "service": "Contact",
-  "interval": 10
+"accessories": [
+{
+ "accessory": "Stub",
+ "name": "Contact-Fault",
+ "service": "Contact-fault",
+ "interval": 10
+},
+{
+ "accessory": "Stub",
+ "name": "Contact-battery",
+ "service": "Contact-battery",
+ "interval": 10
+},
+{
+ "accessory": "Stub",
+ "name": "Contact-error",
+ "service": "Contact-error",
+ "interval": 10
+},
+{
+ "accessory": "Stub",
+ "name": "Contact-tamper",
+ "service": "Contact-tamper",
+ "interval": 10
+},
+{
+ "accessory": "Stub",
+ "name": "Contact-Reach",
+ "service": "Contact-reach",
+ "interval": 10
 }]
 
 */
